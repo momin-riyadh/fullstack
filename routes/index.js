@@ -20,28 +20,28 @@ router.get('/login', function (req, res, next) {
 });
 
 /* POST login. */
-router.post('/login', function (req, res, next){
+router.post('/login', function (req, res, next) {
 
     var field = 'username';
 
     const regexExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gi;
 
-    if(regexExp.test(req.body.username)){
+    if (regexExp.test(req.body.username)) {
         field = 'email';
-    }else if (req.body.username.length > 10){
+    } else if (req.body.username.length > 10) {
         field = 'mobile';
     }
 
     const query = 'select `id`, `email`, `mobile`, `password` from users where `' + field + '` = \'' + req.body.username + '\' limit 1;';
 
     connection.query(query, async (err, users, fields) => {
-        if(users.length){
+        if (users.length) {
             //const passwordMatch = await bcrypt.compare(req.body.password, users[0].password);
             //console.log(passwordMatch)
-            if(await bcrypt.compare(req.body.password, users[0].password)) {
-                res.json({ message: 'Login successful' });
+            if (await bcrypt.compare(req.body.password, users[0].password)) {
+                res.json({message: 'Login successful'});
             } else {
-                res.status(401).json({ message: 'Invalid username or password' });
+                res.status(401).json({message: 'Invalid username or password'});
             }
         }
         //console.log(results.length); // results contains rows returned by server
