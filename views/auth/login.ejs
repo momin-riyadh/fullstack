@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include('../partials/head'); %>
+</head>
+<body>
+<div class="login-area">
+
+    <div class="login-header-area">
+        <div class="login-header">
+            <img src="/images/logo/transparent-1.png" alt="">
+        </div>
+    </div>
+
+
+    <div class="login-main">
+        <div class="login-form-area">
+
+            <div class="g-login-left-part-area">
+                <div class="g-left-title">
+                    <img class="img-fluid" src="/images/logo/transparent-2.svg" alt="">
+                </div>
+
+                <div class="g-login-left-part">
+                    <div class="login-form-header">
+                        <h4>Log in</h4>
+                        <p class="mb-0">Enter your Employee ID and Password below to login</p>
+                    </div>
+                    <form action="/login" method="post">
+                        <div class="text-center pt-3"><span id="loginError" class="text-danger"
+                                                            style="display: none"></span></div>
+                        <label for="g-login-employee-id">
+                            <input type="text" name="username" id="g-login-employee-id" placeholder="Employee ID" required
+                                   autocomplete="off">
+                            <img src="/images/user.png" alt="">
+                        </label>
+                        <label for="g-login-employee-id">
+                            <input type="password" name="password" id="g-login-password" placeholder="Password" required
+                                   autocomplete="off">
+                            <img src="/images/key.png" alt="">
+                        </label>
+                        <button type="submit">Log In</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
