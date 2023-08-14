@@ -1,5 +1,3 @@
-Absolutely, here's the README file content in Markdown format:
-
 
 # Fullstack JavaScript
 
