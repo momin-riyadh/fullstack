@@ -3,7 +3,6 @@ var router = express.Router();
 const mysql = require('mysql2');
 const config = require('../config')
 const connection = mysql.createConnection(config.database);
-
 var bcrypt = require('bcryptjs');
 
 /* GET home page. */
@@ -14,8 +13,12 @@ router.get('/', function (req, res, next) {
 
 /* GET login page. */
 router.get('/login', function (req, res, next) {
+
+    const flashMessages = req.flash();
+
     res.render('auth/login', {
-        title: 'Login'
+        title: 'Login',
+        flashMessages
     });
 });
 
@@ -36,13 +39,17 @@ router.post('/login', function (req, res, next) {
 
     connection.query(query, async (err, users, fields) => {
         if (users.length) {
-            //const passwordMatch = await bcrypt.compare(req.body.password, users[0].password);
-            //console.log(passwordMatch)
             if (await bcrypt.compare(req.body.password, users[0].password)) {
                 res.json({message: 'Login successful'});
             } else {
-                res.status(401).json({message: 'Invalid username or password'});
+                req.flash('error', 'The provided password is incorrect.');
+                //req.locals.errorMessage = 'The provided password is incorrect.';
+                res.redirect('/login');
             }
+        }else {
+            req.flash('error', 'These credentials do not match our records.');
+            //req.locals.errorMessage = 'These credentials do not match our records.';
+            res.redirect('/login');
         }
         //console.log(results.length); // results contains rows returned by server
         //console.log(fields); // fields contains extra meta data about results, if available
