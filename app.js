@@ -53,4 +53,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+function auth(req, res, next){}
+
 module.exports = app;
