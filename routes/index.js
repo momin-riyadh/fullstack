@@ -62,14 +62,16 @@ router.post('/login', function (req, res, next) {
                     },
                 });
 
-                res.json({accessToken: accessToken});
+                req.session.accessToken = accessToken;
+
+                res.redirect('/');
             } else {
-                req.flash('error', 'The provided password is incorrect.');
+                req.flash('errorMessage', 'The provided password is incorrect.');
                 //req.locals.errorMessage = 'The provided password is incorrect.';
                 res.redirect('/login');
             }
         }else {
-            req.flash('error', 'These credentials do not match our records.');
+            req.flash('errorMessage', 'These credentials do not match our records.');
             //req.locals.errorMessage = 'These credentials do not match our records.';
             res.redirect('/login');
         }
