@@ -10,40 +10,6 @@ const flash = require('connect-flash');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
-// Authentication middleware
-const authMiddleware = (req, res, next) => {
-    const token = req.header('Authorization');
-
-    if (token) {
-        jwt.verify(token, secretKey, (err, user) => {
-            if (err) {
-                return res.status(401).json({ message: 'Authentication failed' });
-            }
-            req.user = user; // Attach user info to request
-            next(); // Proceed to the next middleware or route handler
-        });
-    } else {
-        res.status(401).json({ message: 'Authentication token not provided' });
-    }
-};
-
-// Guest middleware
-const guestMiddleware = (req, res, next) => {
-    const token = req.header('Authorization');
-
-    if (! token) {
-        next(); // Proceed to the next middleware or route handler
-    } else {
-        jwt.verify(token, secretKey, (err, user) => {
-            if (err) {
-                next(); // Proceed to the next middleware or route handler
-            } else {
-                res.redirect('/');
-            }
-        });
-    }
-};
-
 var app = express();
 
 app.use(session({
@@ -77,16 +43,14 @@ app.use(function (req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-function auth(req, res, next){}
+// app.use(function(err, req, res, next) {
+//   // set locals, only providing error in development
+//   res.locals.message = err.message;
+//   res.locals.error = req.app.get('env') === 'development' ? err : {};
+//
+//   // render the error page
+//   res.status(err.status || 500);
+//   res.render('error');
+// });
 
 module.exports = app;
