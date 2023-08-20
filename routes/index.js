@@ -4,6 +4,7 @@ const mysql = require('mysql2');
 const config = require('../config')
 const connection = mysql.createConnection(config.database);
 var bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -35,12 +36,33 @@ router.post('/login', function (req, res, next) {
         field = 'mobile';
     }
 
-    const query = 'select `id`, `email`, `mobile`, `password` from users where `' + field + '` = \'' + req.body.username + '\' limit 1;';
+    const query = 'select `id`, `first_name`, `last_name`, `email`, `mobile`, `password` from users where `' + field + '` = \'' + req.body.username + '\' limit 1;';
 
     connection.query(query, async (err, users, fields) => {
         if (users.length) {
             if (await bcrypt.compare(req.body.password, users[0].password)) {
-                res.json({message: 'Login successful'});
+
+                const user = {
+                    ...(users[0].email !== null) && {email: users[0].email},
+                    first_name: users[0].first_name,
+                    id: users[0].id,
+                    ...(users[0].last_name !== null) && {last_name: users[0].last_name},
+                    ...(users[0].mobile !== null) && {mobile: users[0].mobile},
+                };
+
+                const accessToken = jwt.sign({user: user}, config.jwt.secret, {
+                    algorithm: config.jwt.alg,
+                    audience: user.first_name,
+                    expiresIn: config.jwt.expiresIn + 'd',
+                    issuer: config.app.name,
+                    subject: '',
+                    header: {
+                        alg: config.jwt.alg,
+                        typ: config.jwt.typ,
+                    },
+                });
+
+                res.json({accessToken: accessToken});
             } else {
                 req.flash('error', 'The provided password is incorrect.');
                 //req.locals.errorMessage = 'The provided password is incorrect.';
