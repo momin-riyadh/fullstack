@@ -5,15 +5,20 @@ const config = require('../config')
 const connection = mysql.createConnection(config.database);
 var bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const middlewares = require('../middlewares.js');
+const addJwtToHeader = middlewares.addJwtToHeader;
+const authMiddleware = middlewares.authMiddleware;
+const guestMiddleware = middlewares.guestMiddleware;
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-    //res.render('index', { title: 'Express' });
-    res.redirect('/login');
+router.get('/', authMiddleware, function (req, res, next) {
+    res.render('index', {
+        title: 'Dashboard'
+    });
 });
 
 /* GET login page. */
-router.get('/login', function (req, res, next) {
+router.get('/login', guestMiddleware, function (req, res, next) {
 
     const flashMessages = req.flash();
 
@@ -24,7 +29,7 @@ router.get('/login', function (req, res, next) {
 });
 
 /* POST login. */
-router.post('/login', function (req, res, next) {
+router.post('/login', guestMiddleware, function (req, res, next) {
 
     var field = 'username';
 
@@ -62,14 +67,17 @@ router.post('/login', function (req, res, next) {
                     },
                 });
 
-                res.json({accessToken: accessToken});
+                req.session.accessToken = accessToken;
+
+                //next();
+                res.redirect('/')
             } else {
-                req.flash('error', 'The provided password is incorrect.');
+                req.flash('errorMessage', 'The provided password is incorrect.');
                 //req.locals.errorMessage = 'The provided password is incorrect.';
                 res.redirect('/login');
             }
         }else {
-            req.flash('error', 'These credentials do not match our records.');
+            req.flash('errorMessage', 'These credentials do not match our records.');
             //req.locals.errorMessage = 'These credentials do not match our records.';
             res.redirect('/login');
         }

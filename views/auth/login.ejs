@@ -27,8 +27,10 @@
                         <p class="mb-0">Enter your Employee ID and Password below to login</p>
                     </div>
                     <form action="/login" method="post">
-                        <% if(flashMessages.error){ %>
-                            <div class="text-center pt-3"><span id="loginError" class="text-danger"><%= flashMessages.error %></span></div>
+                        <% if(flashMessages.errorMessage){ %>
+                            <div class="text-center pt-3"><span id="loginError"
+                                                                class="text-danger"><%= flashMessages.errorMessage %></span>
+                            </div>
                         <% } %>
                         <label for="g-login-employee-id">
                             <input type="text" name="username" id="g-login-employee-id" placeholder="Employee ID"
