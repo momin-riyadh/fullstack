@@ -1,0 +1,10 @@
+<% if(typeof validationErrors !== 'undefined') { %>
+
+    <% const errors = JSON.parse(validationErrors) %>
+
+    <% if(errors && errors[name]){ %>
+        <div class="text-center pt-3"><span id="loginError"
+                                            class="text-danger"><%= errors[name].msg %></span>
+        </div>
+<% }
+} %>

@@ -1,0 +1,31 @@
+<div>
+    <div class="topbar-wrapper px-15 bg-white">
+        <div class="top-bar-content d-flex align-items-center justify-content-between py-10">
+            <div class="sidebar-navbar">
+                <i class="fas fa-bars"></i>
+            </div>
+
+            <div class="topbar-user-info-area">
+                <div class="d-flex align-items-center justify-content-end">
+                    <!--                        <div class="user-notification px-10 notification-in"><i class="far fa-bell"></i></div>-->
+                    <div class="user-name"><%= user.getFullName() %></div>
+                    <div class="user-image px-15">
+                        <img class="img-fluid" :src="user_info.media ? user_info.media.url : '@/assets/img/user-image.jpg'" alt="root@ccpro">
+                    </div>
+                    <div class="user-profile-navbar">
+                        <i class="fas fa-stream"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- scroll to top -->
+    <div class="totop">
+        <i class="fa fa-angle-up" aria-hidden="true"></i>
+    </div>
+    <!-- scroll to top end-->
+    <RealtimeNotification class="RealtimeNotificationComponent" />
+
+    <UserProfileBar />
+</div>

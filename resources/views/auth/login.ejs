@@ -34,15 +34,17 @@
                         <% } %>
                         <label for="g-login-employee-id">
                             <input type="text" name="username" id="g-login-employee-id" placeholder="Employee ID"
-                                   required
+
                                    autocomplete="off">
                             <img src="/images/user.png" alt="">
                         </label>
+                        <%- include('../shared/errors/validation', {name: 'username', validationErrors: flashMessages.validationErrors}); %>
                         <label for="g-login-employee-id">
-                            <input type="password" name="password" id="g-login-password" placeholder="Password" required
+                            <input type="password" name="password" id="g-login-password" placeholder="Password"
                                    autocomplete="off">
                             <img src="/images/key.png" alt="">
                         </label>
+                            <%- include('../shared/errors/validation', {name: 'password', validationErrors: flashMessages.validationErrors}); %>
                         <button type="submit">Log In</button>
                     </form>
                 </div>
