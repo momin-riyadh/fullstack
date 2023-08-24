@@ -1,0 +1,11 @@
+{
+  "development": {
+    "username": "root",
+    "password": "",
+    "database": "kbs_live",
+    "host": "localhost",
+    "dialect": "mysql",
+    "port": 3306,
+    "logging": true
+  }
+}
