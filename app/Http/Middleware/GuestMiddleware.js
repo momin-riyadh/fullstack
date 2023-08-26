@@ -4,7 +4,7 @@ const config = require("../../../config");
 module.exports = (req, res, next) => {
     const token = req.session.accessToken;
 
-    if (! token) {
+    if (!token) {
         next(); // Proceed to the next middleware or route handler
     } else {
         jwt.verify(token, config.jwt.secret, (err, user) => {

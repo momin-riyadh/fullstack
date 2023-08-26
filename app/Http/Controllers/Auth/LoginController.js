@@ -4,7 +4,7 @@ const config = require("../../../../config");
 
 const User = require('../../../Models/User');
 
-function showLoginForm(req, res){
+function showLoginForm(req, res) {
     const flashMessages = req.flash();
     console.log(flashMessages)
 
@@ -14,11 +14,11 @@ function showLoginForm(req, res){
     });
 }
 
-async function login(req, res){
+async function login(req, res) {
 
     const {username, password} = req.body;
 
-    var field = 'username';
+    let field = 'username';
 
     const regexExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gi;
 
@@ -29,10 +29,10 @@ async function login(req, res){
     }
 
     const user = await User.findOne({
-        where: { [field]: req.body.username },
+        where: {[field]: req.body.username},
     });
 
-    if(user){
+    if (user) {
         if (await bcrypt.compare(password, user.password)) {
             const userObject = {
                 ...(user.email !== null) && {email: user.email},
@@ -62,7 +62,7 @@ async function login(req, res){
 
             res.redirect('/login');
         }
-    }else {
+    } else {
         req.flash('errorMessage', 'These credentials do not match our records.');
 
         res.redirect('/login');
