@@ -34,10 +34,6 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// const ValidationRedirectionMiddleware = require('./app/Http/Middleware/ValidationRedirectionMiddleware');
-//
-// app.use(ValidationRedirectionMiddleware);
-
 app.use('/', webRouter);
 app.use('/', authRouter);
 

@@ -3,7 +3,7 @@
     <% const errors = JSON.parse(validationErrors) %>
 
     <% if(errors && errors[name]){ %>
-        <small class="text-right text-danger"><span id="loginError"><%= errors[name].msg %></span>
-        </small>
-<% }
-} %>
+        <div class="text-center pt-3"><span id="loginError" class="text-danger"><%= errors[name] %></span>
+        </div>
+    <% } %>
+<% } %>
