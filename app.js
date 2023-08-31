@@ -1,16 +1,16 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const session = require('express-session');
 const config = require('./config');
 const flash = require('connect-flash');
 
-var webRouter = require('./routes/web');
-var authRouter = require('./routes/auth');
+const webRouter = require('./routes/web');
+const authRouter = require('./routes/auth');
 
-var app = express();
+const app = express();
 
 const fileStoreOptions = {
     path: path.join(__dirname, 'sessions'), // Use a separate directory for session storage
